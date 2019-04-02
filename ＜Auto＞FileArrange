@@ -41,3 +41,33 @@ Next
 
 
 End Sub
+
+
+——————————————————————————————
+Sub FCnew()
+
+
+Dim sPathOld As String 
+Dim sPathNew As String  
+Dim sFileNameOld As String
+Dim fso, folder, fds, fd, folder2, fs, f
+
+Set fso = CreateObject("Scripting.FileSystemObject")
+Set folder1 = fso.GetFolder("旧文件A的地址 不加最后的\")
+Set fds = folder1.subfolders 
+sPathNew = "拷贝的目标地址，要加最后的\"
+For Each fd In fds
+    sPathOld = fd.Path & "\"    
+    'sPathOld = "子文件夹地址的例子"
+    sFileNameOld = Dir(sPathOld & "*.xls*") 
+        Do While sFileNameOld <> "" 
+                If sFileNameOld <> "*表纸*" Then
+                FileCopy sPathOld & sFileNameOld, sPathNew & sFileNameOld           
+                End If
+        sFileNameOld = Dir　
+        Loop
+
+Next
+
+
+End Sub
