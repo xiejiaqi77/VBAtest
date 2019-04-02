@@ -1,0 +1,45 @@
+Sub 整理新制品引继文件内部的代码()
+'
+' seli Macro
+'
+
+'
+    
+    Range("A1:N300").Select
+    Range("I8").Activate
+    Selection.Cut Destination:=Range("A6:N300")
+    Range("C2").Select
+    ActiveCell.FormulaR1C1 = "=R[5]C[-1]&"":ホンダ 20.5 CR-V 向け　TLYX　6G-VE-MVC フロント・カメラ""" 
+    #打上每次的表情，其中冒号后面的部分是可以变的
+    #前面的=R[5]C[-1]是相对应用，相对C2，加方括号的是相对应用
+ 
+    Range("O1").Select
+    ActiveCell.FormulaR1C1 = "=TODAY()"
+    #打上今天的日期
+    Range("O2").Select
+    ActiveCell.FormulaR1C1 = "購買2部　商品開発課　謝"
+    ActiveCell.Characters(1, 2).PhoneticCharacters = "こうばい"
+    ActiveCell.Characters(4, 1).PhoneticCharacters = "ぶ"
+    ActiveCell.Characters(6, 2).PhoneticCharacters = "しょうひん"
+    ActiveCell.Characters(8, 3).PhoneticCharacters = "かいはつか"
+    ActiveCell.Characters(12, 1).PhoneticCharacters = "しゃ"
+    Columns("I:I").Select
+    Selection.Insert Shift:=xlToRight, CopyOrigin:=xlFormatFromLeftOrAbove
+    Range("I6").Select
+    ActiveCell.FormulaR1C1 = "変更調達区分"
+    ActiveCell.Characters(1, 2).PhoneticCharacters = "ヘンコウ"
+    ActiveCell.Characters(3, 2).PhoneticCharacters = "チョウタツ"
+    ActiveCell.Characters(5, 2).PhoneticCharacters = "クブン"
+    Columns("J:J").Select
+    Columns("I:I").EntireColumn.AutoFit
+    Range("A6:O97").Select
+    Range("P6").Activate
+    ActiveCell.FormulaR1C1 = "情報"
+    Cells.Select
+    Selection.Columns.AutoFit
+    
+    ActiveSheet.name = Cells(7, 2)
+    #给当前的这个sheet（也可能是所有的activesheet）的名字用cells（7,2）的内容来取
+    
+End Sub
+
