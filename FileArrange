@@ -1,0 +1,43 @@
+#把每个需要移动的excel从文件里扒出来汇集到一个总的文件地址下
+#核心功能，在一个大文件下A 进入下面的每一个子文件夹A-n里扒拉出子文件夹里的excel文件
+Sub FCnew()
+
+
+Dim sPathOld As String  '旧的文件地址
+Dim sPathNew As String  '新的文件地址
+Dim sFileNameOld As String
+Dim fso, folder, fds, fd, folder2, fs, f
+
+Set fso = CreateObject("Scripting.FileSystemObject") '首先要创建对象
+Set folder1 = fso.GetFolder("旧文件A的地址 不加最后的\") '将folder1设置为旧的母文件夹 A #利用的是getfolder这个方法
+Set fds = folder1.subfolders '将fds设置为folder1的子文件夹群 #用的是 obj.subfolders这个方法
+sPathNew = "拷贝的目标地址，要加最后的\"
+
+For Each fd In fds '对于子文件夹群的里每一个文件夹
+
+    sPathOld = fd.Path & "\"     '将sPathOld设置为子文件夹的地址，用的是obj.Path这个方法 再加上 "\"
+
+    'sPathOld = "子文件夹地址的例子"
+
+
+    'sFileNameOld = Dir(sPathOld & "*") 普通的话是历遍子文件下所有的文件 就是加上*
+
+    sFileNameOld = Dir(sPathOld & "*.xls*") '如果是需要指定是excel文件的话，加上"*.xls*"
+
+        Do While sFileNameOld <> "" '当子文件夹下的文件不为空的时候
+
+                If sFileNameOld <> "*表纸*" Then 当文件名不含有 表纸 的时候 这个好像不太好使
+
+                FileCopy sPathOld & sFileNameOld, sPathNew & sFileNameOld
+                '拷贝文件的时候FileCopy这个功能不能和module的名字重了，不然会产生冲突
+
+                End If
+
+        sFileNameOld = Dir
+
+        Loop
+
+Next
+
+
+End Sub
