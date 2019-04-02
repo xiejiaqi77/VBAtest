@@ -1,0 +1,96 @@
+'将多个文件夹里的Excel文件的固定内容整合到一个文件夹里
+
+Sub CopyContent更新()
+'
+'
+'
+Dim mypath, myfile  As String
+Dim Thiswb, wb As Workbook
+Dim WsInWb, ThisWs, ws, ws2 As Worksheet
+Dim a, b As Integer
+
+
+
+Set Thiswb = ThisWorkbook '不要でもよい
+
+mypath = "C:\Users\4069300\Documents\XIE\Documents\新製品引き続き\データベースまとめ\"  '需要被整理的目标文件夹
+
+myfile = Dir(mypath & "*.xls*")  '在目标地址寻找excel
+
+Do While myfile <> ""  '在Excel不为空的时候
+
+     Set wb = Application.Workbooks.Open(mypath & myfile)  '暫定変量wb＝開かれたファイル 将暂时的变量wb设置为打开的excel文件
+     
+     For Each ws In wb.Worksheets  ' 循環工作簿里的毎張表
+     
+      If ws.[b655360].End(xlUp).Row <> 1 Then  '在表不为空的情况下，注意不要超范围了 即使说b后面的数字要够大
+      '从b655360往上数，获得第一个不为空的单元格的行数
+      
+     
+        b = ws.[c655360].End(xlUp).Row  'コピーされるエリアの下限界を探す。b = [q65536]. End(xlUP).Row q65536 から　数える　内容があるところのRow数を返す
+        '将b赋值为 从b655360开始往上数第一个不为空的单元格的行数，寻找需要被复制的区域的下限
+     
+        a = ThisWorkbook.Sheets("原本データ").[b655360].End(xlUp).Row + 1  'まとめのファイル、次に貼るところのRow数を返す
+        'sheetの名前変わったらエラーが出る
+        '将a赋值为目标文件的已有内容的下限行数再加一
+        '注意sheet的名字要是变了的话这里的代码也要跟着变
+        '粘贴的目标的excel文件的下限，从那一排再加一排开始粘
+     
+     
+        'Set ws = wb.Worksheets(1)
+     
+        'Set ThisWs = Thiswb.Worksheets(1)
+     
+        ws.Range("a7:p" & b).Copy ThisWorkbook.Sheets("原本データ").Cells(a, 2)
+        'コピーされるファイルの操作される範囲　⇒　"b5:w" & b　まとめのファイルに貼るところ　⇒　Cells(a, 2)
+        'range之前也要写明対象，不然会重複操作同一張sheet！！！！！！
+        'Range("b5:w" & b).Copy ThisWs.Cells(a,2)でもあり
+        
+      End If
+    
+    Next
+     
+     
+    'ws.Application.CutCopyMode = False  '本当に要る？
+     
+    wb.Close False   'POINT　wb　クローズ　wsではない 然后不保存
+     
+    myfile = Dir '换下一个文件
+    
+Loop
+
+'
+End Sub
+
+
+————————————————————————
+
+Sub CopyContent更新()
+
+Dim mypath, myfile  As String
+Dim Thiswb, wb As Workbook
+Dim WsInWb, ThisWs, ws, ws2 As Worksheet
+Dim a, b As Integer
+
+Set Thiswb = ThisWorkbook 
+mypath = "C:\Users\4069300\Documents\XIE\Documents\新製品引き続き\データベースまとめ\"  
+myfile = Dir(mypath & "*.xls*")  
+Do While myfile <> "" 
+     Set wb = Application.Workbooks.Open(mypath & myfile) 
+     For Each ws In wb.Worksheets 
+      If ws.[b655360].End(xlUp).Row <> 1 Then  
+        b = ws.[c655360].End(xlUp).Row  
+        a = ThisWorkbook.Sheets("原本データ").[b655360].End(xlUp).Row + 1  'まとめのファイル、次に貼るところのRow数を返す
+        ws.Range("a7:p" & b).Copy ThisWorkbook.Sheets("原本データ").Cells(a, 2)
+      End If
+    Next
+
+    'ws.Application.CutCopyMode = False
+    wb.Close False  
+    myfile = Dir 
+    
+Loop
+
+'
+End Sub
+
