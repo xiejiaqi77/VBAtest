@@ -33,7 +33,7 @@ For Each fd In fds '对于子文件夹群的里每一个文件夹
 
                 End If
 
-        sFileNameOld = Dir
+        sFileNameOld = Dir　 '转向下一个文件
 
         Loop
 
