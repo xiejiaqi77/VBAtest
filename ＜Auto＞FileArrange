@@ -30,6 +30,7 @@ For Each fd In fds '对于子文件夹群的里每一个文件夹
 
                 FileCopy sPathOld & sFileNameOld, sPathNew & sFileNameOld
                 '拷贝文件的时候FileCopy这个功能不能和module的名字重了，不然会产生冲突
+                '然后如果名字太长了话会不好使，再看一下
 
                 End If
 
